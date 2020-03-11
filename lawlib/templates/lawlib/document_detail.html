@@ -1,0 +1,54 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<table  border="0" cellspacing="0">
+	<tr><td><h4> {{ document.title }}</h4></td></tr>
+	<tr><td><strong>收入项目:</strong>&nbsp; {{ document.revenue.all|join:", " }}</td></tr>
+<tr><td><strong>法律层级:</strong> &nbsp;{{ document.get_grade_display }}</td></tr>
+<tr><td><strong>发文单位:</strong> &nbsp;{{document.organization.all|join:", "}}</td></tr>
+<tr><td><strong>主送单位:</strong> &nbsp;{{document.mdu}}</td></tr>
+<tr><td><strong>文件字号:</strong>&nbsp;({{document.fileprefix}}{{document.file_order}}) </td></tr>
+<tr><td><strong>签发日期:</strong> &nbsp;{{ document.pub_date }}</td></tr>
+<tr><td><strong>执行日期:</strong> &nbsp;{{ document.val_date }}</td></tr>
+<tr><td><strong>失效日期:</strong> &nbsp;{{ document.dis_date }}</td></tr>
+<tr><td><strong>官网链接:</strong> <a href="{{ document.snapshot }}">{{document.snapshot}}</a></td></tr>
+</table>
+
+<div style="margin-left:1px;margin-top:20px">
+	<h5>历次修订情况:</h5>
+	{% if document.repair %}
+	<p>{{ document.repair }}</p>
+	{% else %}
+	<p>未检索到文件修订信息。</p>
+	{% endif %}
+	{% if document.provision_set.all %}
+	<h5>正文规定如下:</h5>
+	<table>
+		<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{document.content_less}}</td></tr>
+		{% for prov in document.provision_set.all %}
+				{% for rule in prov.rule_set.all %}
+				{% if forloop.first %}	
+				<tr><td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	<a href="{{ prov.get_absolute_url }}">{{prov.title}}</a>&nbsp;{{rule.content}}</td> </tr>
+				{% else %}
+				<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ rule.content }}</td></tr>
+				{% endif %}
+				{% endfor %}
+			</td></tr>
+			{% endfor %}
+		<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{document.content_tail}}</td></tr>
+	</table>
+	{% else %}
+	<p>该文件条款内容暂未录入！</p>
+	{% endif %}
+</div>
+<p>&nbsp;</p>
+<div style="margin-left:20px;margin-top:20px">
+	<h6><em>关联文件</em></h6>
+	{% if document.relevancy %}
+	<p>&nbsp;</p>
+	{% else %}
+	<p>暂未从库中检出关联文件。</p>
+	{% endif %}
+</div>
+{% endblock %}

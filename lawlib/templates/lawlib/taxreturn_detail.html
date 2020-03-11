@@ -1,0 +1,41 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<table  border="0" cellspacing="0">
+	<tr><td><h4> {{ taxreturn.title }}</h4></td></tr>
+	<tr><td><strong>适用税费:</strong>&nbsp; {{ taxreturn.revenue }}</td></tr>
+<tr><td><strong>启用文件:</strong> &nbsp;{{ taxreturn.base_file }}</td></tr>
+<tr><td><strong>启用日期:</strong> &nbsp;{{ taxreturn.val_date }}</td></tr>
+<tr><td><strong>停用日期:</strong> &nbsp;{{ taxreturn.dis_date }}</td></tr>
+<tr><td><strong>官网链接:</strong> <a href="{{ taxreturn.base_file_url }}">{{taxreturn.base_file_url}}</a></td></tr>
+</table>
+
+<div style="margin-left:1px;margin-top:20px">
+	<h5>历次修订情况:</h5>
+	{% if taxreturn.repair %}
+	<p>{{ taxreturn.repair }}</p>
+	{% else %}
+	<p>未检索到申报表修订信息。</p>
+	{% endif %}
+	{% if taxreturn.provision_set.all %}
+	<h5>报表样式如下:</h5>
+	<table>
+		<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{taxreturn.content_less}}</td></tr>
+		{% for prov in taxreturn.provision_set.all %}
+				{% for rule in prov.rule_set.all %}
+				{% if forloop.first %}	
+				<tr><td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	<a href="{{ prov.get_absolute_url }}">{{prov.title}}</a>&nbsp;{{rule.content}}</td> </tr>
+				{% else %}
+				<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ rule.content }}</td></tr>
+				{% endif %}
+				{% endfor %}
+			</td></tr>
+			{% endfor %}
+		<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{taxreturn.content_tail}}</td></tr>
+	</table>
+	{% else %}
+	<p>该报表样式暂未提供！</p>
+	{% endif %}
+</div>
+{% endblock %}

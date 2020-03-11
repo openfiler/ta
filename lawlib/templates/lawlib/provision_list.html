@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h4>条款列示</h4>
+
+    {% if provision_list %}
+    <ul>
+
+      {% for prov in provision_list %}
+      <li>
+	<a href="{{ prov.get_absolute_url }}">《{{prov.document}}》 {{ prov.title }}</a>{{prov.rule}}
+      </li>
+      {% endfor %}
+
+    </ul>
+
+    {% else %}
+      <p>尚无条款集录！</p>
+    {% endif %}       
+{% endblock %}

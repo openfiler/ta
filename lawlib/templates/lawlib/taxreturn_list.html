@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h4>申报表列示</h4>
+
+    {% if taxreturn_list %}
+    <ul>
+
+      {% for form  in taxreturn_list %}
+      <li>
+	      <a href="{{ form.get_absolute_url }}">{{ form.title }}</a> 
+      </li>
+      {% endfor %}
+
+    </ul>
+
+    {% else %}
+      <p>尚无文件集录！</p>
+    {% endif %}       
+{% endblock %}

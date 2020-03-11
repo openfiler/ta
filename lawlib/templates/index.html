@@ -1,0 +1,23 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<h3><strong>税费政策法规库</strong></h3>
+<p>&nbsp;</p>
+<h4>当前库存内容</h4>
+ <p>The library has the following record:</p>
+  <ul>
+	  <li><strong>文件:</strong>&nbsp;&nbsp;共{{ num_docs }}件</li>
+	  <li><strong>条款:</strong>&nbsp;&nbsp;共{{ num_provs }}条&nbsp;{{num_rules}}款</li>
+	  <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;其中:现行有效{{num_val_rules}}款</li>
+	  <li><strong>申报表:</strong>&nbsp;&nbsp;共{{ num_taxreturns }}项</li>
+  </ul>
+  <table>
+  <tr><thead><td>收集思路:</td></thead></tr>
+  <tr><td><small>1.条款是明确纳税权利义务关系的基本单元。</td></small></tr>
+  <tr><td><small>2.本库最大特点是反映政策条款级细颗粒度。</small></td></tr>
+  <tr><td><small>3.主要集录2019年1月1日及其后有效政策。</small></td></tr>
+  <tr><td><small>4.在用各税费种申报表随税务总局发布更新。</small></td></tr>
+</table>
+<footer class="blog-footer">
+<p><a href="http://www.beian.miit.gov.cn/"> 备案号:冀ICP备18035268号</a></p>
+</footer>
+{% endblock %}
